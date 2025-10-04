@@ -48,7 +48,7 @@ Get video status and URL.
 
 **Returns:** `Video` object with current status
 
-## Examples
+## Quick Examples
 
 ### Basic video generation
 
@@ -84,6 +84,23 @@ while (true) {
   await new Promise(r => setTimeout(r, 5000)); // Wait 5s
 }
 ```
+
+### Real-World Examples
+
+See the [`examples/`](./examples) directory for complete, production-ready examples:
+
+- **[GitHub Release Videos](./examples/github-release-video.js)** - Automatically generate announcement videos from GitHub releases
+  ```javascript
+  // Fetch latest Next.js release and create video
+  const release = await fetch('https://api.github.com/repos/vercel/next.js/releases/latest').then(r => r.json());
+  const video = await vloex.videos.create({ script: `Next.js ${release.tag_name} released!` });
+  ```
+
+More examples coming soon:
+- CI/CD pipeline notifications
+- Product launch announcements
+- Automated social media content
+- Customer onboarding videos
 
 ## Error Handling
 
