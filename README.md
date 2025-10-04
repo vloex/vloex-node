@@ -130,7 +130,7 @@ Full API documentation: https://api.vloex.com/docs
 ## Support
 
 - GitHub: https://github.com/vloex/vloex-node
-- Email: support@vloex.com
+- Email: sats@vloex.com
 - Docs: https://api.vloex.com/docs
 
 ## License
