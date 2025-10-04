@@ -20,6 +20,22 @@ Perfect for:
 4. Generates and polls for video completion
 5. Returns the final video URL
 
+### [github-release-with-webhook.js](./github-release-with-webhook.js) 🆕
+**GitHub release videos with webhooks (async notifications)**
+
+**Why webhooks?**
+- ✅ No polling required - get instant notifications when video is ready
+- ✅ Reduced API calls - save on rate limits
+- ✅ Better architecture - event-driven, not polling-based
+- ✅ Perfect for long-running tasks and serverless environments
+
+**What it includes:**
+1. Video generation with webhook URL
+2. Complete Express.js webhook receiver with signature verification
+3. HMAC security implementation (crypto module)
+4. Production best practices
+5. ngrok setup for local testing
+
 **Run it:**
 ```bash
 # Set your API key
