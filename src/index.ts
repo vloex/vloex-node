@@ -33,10 +33,20 @@ class Vloex {
      * @returns Video job with ID
      */
     create: async (params: GenerateParams): Promise<Video> => {
-      return this.request('POST', '/v1/generate', {
+      const payload: any = {
         input: params.script,
         options: params.options || {}
-      });
+      };
+
+      if (params.webhookUrl) {
+        payload.webhook_url = params.webhookUrl;
+      }
+
+      if (params.webhookSecret) {
+        payload.webhook_secret = params.webhookSecret;
+      }
+
+      return this.request('POST', '/v1/generate', payload);
     },
 
     /**
