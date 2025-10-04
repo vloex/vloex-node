@@ -35,11 +35,7 @@ Create a video from text.
 
 **Parameters:**
 - `script` (string, required) - The text script for your video
-- `options` (object, optional)
-  - `avatar` - Avatar to use (default: 'lily')
-  - `voice` - Voice tone (default: 'excited')
-  - `background` - Background setting (default: 'modern_office')
-  - `webhook_url` - URL to call when complete
+- `options` (object, optional) - Coming soon: avatar, voice, background customization
 
 **Returns:** `Video` object with `id` and `status`
 
@@ -61,19 +57,6 @@ const vloex = require('@vloex/sdk')('vs_live_...');
 
 const video = await vloex.videos.create({
   script: 'We just shipped a major update!'
-});
-```
-
-### With options
-
-```javascript
-const video = await vloex.videos.create({
-  script: 'Check out our new features',
-  options: {
-    avatar: 'lily',
-    voice: 'professional',
-    background: 'modern_office'
-  }
 });
 ```
 
@@ -100,19 +83,6 @@ while (true) {
 
   await new Promise(r => setTimeout(r, 5000)); // Wait 5s
 }
-```
-
-### Using webhooks
-
-```javascript
-const video = await vloex.videos.create({
-  script: 'Product update',
-  options: {
-    webhook_url: 'https://yourapp.com/webhooks/vloex'
-  }
-});
-
-// VLOEX will POST to your webhook when done
 ```
 
 ## Error Handling
@@ -155,13 +125,13 @@ const video: Video = await client.videos.create(params);
 
 ## Documentation
 
-Full API documentation: https://docs.vloex.com
+Full API documentation: https://api.vloex.com/docs
 
 ## Support
 
 - GitHub: https://github.com/vloex/vloex-node
 - Email: support@vloex.com
-- Docs: https://docs.vloex.com
+- Docs: https://api.vloex.com/docs
 
 ## License
 
