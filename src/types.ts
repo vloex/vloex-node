@@ -6,6 +6,8 @@
 // Core: script → video
 export interface GenerateParams {
   script: string;
+  webhookUrl?: string;     // Optional webhook for completion notification
+  webhookSecret?: string;  // Optional secret for webhook HMAC signature
   options?: {
     avatar?: string;      // Coming soon
     voice?: string;       // Coming soon

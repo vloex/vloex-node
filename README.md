@@ -84,17 +84,19 @@ const video = await vloex.videos.create({
 });
 ```
 
-### With Custom Options
+### With Custom Options (Coming Soon)
 
 ```javascript
 const video = await vloex.videos.create({
   script: "Welcome to our product demo!",
   options: {
-    avatar: 'lily',         // Professional presenter
-    voice: 'friendly',      // Warm tone
-    background: 'modern_office'
+    avatar: 'lily',              // Only supported avatar
+    voice: 'enthusiastic',       // Only supported voice
+    background: 'modern_office'  // Only supported background
   }
 });
+
+// More avatars, voices, and backgrounds coming soon!
 ```
 
 ### Using Environment Variables
@@ -131,11 +133,12 @@ Create a new video.
 
 **Parameters:**
 - `script` (string, required) - The text script for your video
-- `options` (object, optional) - Customize avatar, voice, background
-  - `avatar`: `'lily'` (default), `'anna'`, `'tyler'`
-  - `voice`: `'excited'` (default), `'friendly'`, `'professional'`
-  - `background`: `'modern_office'` (default), `'conference_room'`, `'tech_office'`
 - `webhookUrl` (string, optional) - URL to receive completion notification
+- `webhookSecret` (string, optional) - Secret for webhook HMAC signature
+- `options` (object, optional) - Customize avatar, voice, background (coming soon)
+  - `avatar`: `'lily'` (only supported option)
+  - `voice`: `'enthusiastic'` (only supported option)
+  - `background`: `'modern_office'` (only supported option)
 
 **Returns:**
 ```javascript
