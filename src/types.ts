@@ -15,11 +15,40 @@ export interface GenerateParams {
   };
 }
 
-// What you get back
+// Journey: screenshots/URL → video
+export interface JourneyParams {
+  // Mode 1: Provide screenshots (with optional descriptions)
+  screenshots?: string[];  // base64-encoded images
+  descriptions?: string[];  // Optional - if provided, uses these instead of Vision AI
+
+  // Mode 2: URL-based (public pages only)
+  productUrl?: string;
+  pages?: string[];  // Just paths like ["/", "/features", "/pricing"]
+
+  // Common settings
+  productContext: string;
+  stepDuration?: number;
+  avatarPosition?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
+  tone?: 'professional' | 'casual' | 'excited';
+}
+
+// What you get back from /v1/generate
 export interface Video {
   id: string;
   status: 'queued' | 'processing' | 'completed' | 'failed';
   url?: string;
+  error?: string;
+}
+
+// What you get back from /v1/videos/from-journey
+export interface JourneyVideo {
+  success: boolean;
+  videoPath?: string;
+  videoUrl?: string;
+  durationSeconds?: number;
+  fileSizeMb?: number;
+  cost?: number;
+  stepsCount?: number;
   error?: string;
 }
 

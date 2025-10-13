@@ -123,6 +123,28 @@ const video = await vloex.videos.create({
 // We'll POST to your webhook when the video is ready
 ```
 
+### Journey Videos (Product Demos)
+
+Create videos from screenshots or URLs:
+
+**Mode 1: Screenshots with Descriptions (Fastest)**
+```javascript
+const video = await vloex.videos.fromJourney({
+  screenshots: ['base64img1...', 'base64img2...'],
+  descriptions: ['Login page', 'Dashboard overview'],
+  productContext: 'MyApp Demo'
+});
+```
+
+**Mode 2: URL + Page Paths (Public Pages)**
+```javascript
+const video = await vloex.videos.fromJourney({
+  productUrl: 'https://myapp.com',
+  pages: ['/', '/features', '/pricing'],
+  productContext: 'MyApp Website Tour'
+});
+```
+
 ---
 
 ## 📚 API Reference

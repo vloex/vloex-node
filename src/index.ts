@@ -7,7 +7,7 @@
  */
 
 import fetch from 'node-fetch';
-import { GenerateParams, Video, VloexError } from './types';
+import { GenerateParams, Video, VloexError, JourneyParams, JourneyVideo } from './types';
 
 const DEFAULT_BASE_URL = 'https://api.vloex.com';
 
@@ -56,6 +56,62 @@ class Vloex {
      */
     retrieve: async (id: string): Promise<Video> => {
       return this.request('GET', `/v1/jobs/${id}/status`);
+    },
+
+    /**
+     * Create a video from journey - 2 simple modes
+     *
+     * Mode 1a - Provide screenshots with descriptions (fastest):
+     *   const video = await vloex.videos.fromJourney({
+     *     screenshots: ['base64img1...', 'base64img2...'],
+     *     descriptions: ['Login page', 'Dashboard overview'],
+     *     productContext: 'My Product Demo'
+     *   });
+     *
+     * Mode 1b - Provide screenshots only (Vision AI analyzes):
+     *   const video = await vloex.videos.fromJourney({
+     *     screenshots: ['base64img1...', 'base64img2...'],
+     *     productContext: 'My Product Demo'
+     *   });
+     *
+     * Mode 2 - URL with page paths (public pages only):
+     *   const video = await vloex.videos.fromJourney({
+     *     productUrl: 'https://myapp.com',
+     *     pages: ['/dashboard', '/features', '/pricing'],
+     *     productContext: 'MyApp Product Tour'
+     *   });
+     *
+     * @param params - Journey parameters
+     * @returns Journey video result
+     */
+    fromJourney: async (params: JourneyParams): Promise<JourneyVideo> => {
+      const payload: any = {
+        product_context: params.productContext,
+        step_duration: params.stepDuration || 15,
+        avatar_position: params.avatarPosition || 'bottom-right',
+        tone: params.tone || 'professional'
+      };
+
+      // Mode 1: Screenshots provided
+      if (params.screenshots) {
+        payload.screenshots = params.screenshots;
+
+        // Optional descriptions (Mode 1a vs 1b)
+        if (params.descriptions) {
+          payload.descriptions = params.descriptions;
+        }
+      }
+
+      // Mode 2: URL-based (public pages only)
+      if (params.productUrl) {
+        payload.product_url = params.productUrl;
+      }
+
+      if (params.pages) {
+        payload.pages = params.pages;
+      }
+
+      return this.request('POST', '/v1/videos/from-journey', payload);
     }
   };
 
@@ -102,6 +158,19 @@ class Vloex {
       };
     }
 
+    if (path.includes('/from-journey')) {
+      return {
+        success: data.success,
+        videoPath: data.video_path,
+        videoUrl: data.video_url,
+        durationSeconds: data.duration_seconds,
+        fileSizeMb: data.file_size_mb,
+        cost: data.cost,
+        stepsCount: data.steps_count,
+        error: data.error_message || data.error
+      };
+    }
+
     return data;
   }
 }
@@ -115,4 +184,4 @@ export default function vloex(apiKey: string, baseUrl?: string): Vloex {
   return new Vloex(apiKey, baseUrl);
 }
 
-export { Vloex, Video, GenerateParams, VloexError };
+export { Vloex, Video, GenerateParams, VloexError, JourneyParams, JourneyVideo };
