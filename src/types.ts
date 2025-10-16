@@ -8,6 +8,7 @@ export interface GenerateParams {
   script: string;
   webhookUrl?: string;     // Optional webhook for completion notification
   webhookSecret?: string;  // Optional secret for webhook HMAC signature
+  idempotencyKey?: string; // Optional UUID to prevent duplicate charges on retry
   options?: {
     avatar?: string;      // Coming soon
     voice?: string;       // Coming soon
