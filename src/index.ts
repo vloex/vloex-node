@@ -31,6 +31,14 @@ class Vloex {
      * Create a video
      * @param params - script and optional settings
      * @returns Video job with ID
+     *
+     * Example with idempotency:
+     *   const { v4: uuidv4 } = require('uuid');
+     *   const video = await vloex.videos.create({
+     *     script: 'Version 2.0 is live!',
+     *     webhookUrl: 'https://your-app.com/webhook',
+     *     idempotencyKey: uuidv4()  // Prevents duplicate charges
+     *   });
      */
     create: async (params: GenerateParams): Promise<Video> => {
       const payload: any = {
@@ -46,7 +54,7 @@ class Vloex {
         payload.webhook_secret = params.webhookSecret;
       }
 
-      return this.request('POST', '/v1/generate', payload);
+      return this.request('POST', '/v1/generate', payload, params.idempotencyKey);
     },
 
     /**
@@ -118,15 +126,22 @@ class Vloex {
   /**
    * Internal: Make HTTP request
    */
-  private async request(method: string, path: string, body?: any): Promise<any> {
+  private async request(method: string, path: string, body?: any, idempotencyKey?: string): Promise<any> {
     const url = `${this.baseUrl}${path}`;
+
+    const headers: any = {
+      'Authorization': `Bearer ${this.apiKey}`,
+      'Content-Type': 'application/json',
+    };
+
+    // Add idempotency key if provided
+    if (idempotencyKey) {
+      headers['Idempotency-Key'] = idempotencyKey;
+    }
 
     const response = await fetch(url, {
       method,
-      headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: body ? JSON.stringify(body) : undefined,
     });
 
