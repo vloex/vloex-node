@@ -277,7 +277,7 @@ try {
 
 ```javascript
 const vloex = new Vloex('vs_live_...', {
-  timeout: 60000  // milliseconds
+  timeout: 60000  // milliseconds (default: 30000)
 });
 ```
 
@@ -289,11 +289,11 @@ const vloex = new Vloex('vs_live_...', {
 });
 ```
 
-### Debug Mode
+### Retry Configuration
 
 ```javascript
 const vloex = new Vloex('vs_live_...', {
-  debug: true  // Logs all API requests
+  maxRetries: 5  // retry transient errors up to 5 times (default: 3)
 });
 ```
 
